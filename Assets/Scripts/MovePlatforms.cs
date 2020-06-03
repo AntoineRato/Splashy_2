@@ -22,7 +22,7 @@ public class MovePlatforms : MonoBehaviour
     {
         this.transform.position -= new Vector3(moveSpeed * Time.deltaTime, 0, 0);
         
-        if(this.transform.position.x < destroyValueBegin && (this.transform.position.x + x_travelledCounter) < destroyDistance)
+        if(this.transform.position.x < destroyValueBegin && (this.transform.position.x + x_travelledCounter) < destroyDistance && this.transform.childCount > 0)
         {
             Destroy(this.transform.GetChild(0).gameObject);
             x_travelledCounter += destroyDistance;

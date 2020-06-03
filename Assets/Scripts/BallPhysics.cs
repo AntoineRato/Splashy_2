@@ -21,6 +21,6 @@ public class BallPhysics : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         this.gameObject.GetComponent<Animation>().Play();
-        this.gameObject.GetComponent<Rigidbody>().AddForce(transform.up * bounceStrenght);
+        this.gameObject.GetComponent<Rigidbody>().AddForce(transform.up * bounceStrenght);;
     }
 }

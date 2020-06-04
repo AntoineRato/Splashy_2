@@ -11,9 +11,14 @@ public class DrawLevel : MonoBehaviour
     private float z_minGameArea = -3;
     private float z_maxGameArea = 2;
 
+#if UNITY_EDITOR
+    public float Timescale = 1.5f;
+#endif
+
     private void Awake()
     {
-        Application.targetFrameRate = 60;
+        Application.targetFrameRate = 300;
+        Time.timeScale = 1.5f;
     }
 
     // Start is called before the first frame update
@@ -25,10 +30,11 @@ public class DrawLevel : MonoBehaviour
 
         for (int i = 0; i < 50; i++)
         {
-            z_spawnValue += Random.Range(-spacingPlatformValue, spacingPlatformValue);
-            z_spawnValue = Mathf.Min(z_maxGameArea, Mathf.Max(z_spawnValue, z_minGameArea));
+            /*z_spawnValue += Random.Range(-spacingPlatformValue, spacingPlatformValue);
+            z_spawnValue = Mathf.Min(z_maxGameArea, Mathf.Max(z_spawnValue, z_minGameArea));*/
 
-            Instantiate(platformPrefab, new Vector3(x_spawnValue, 0, z_spawnValue), Quaternion.identity, allPlatformParent.transform);
+            //Instantiate(platformPrefab, new Vector3(x_spawnValue, 0, z_spawnValue), Quaternion.identity, allPlatformParent.transform);
+            Instantiate(platformPrefab, new Vector3(x_spawnValue, 0, z_spawnValue), Quaternion.identity);
 
             x_spawnValue += spacingPlatformValue;
         }
@@ -37,6 +43,8 @@ public class DrawLevel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+#if UNITY_EDITOR
+        Time.timeScale = Timescale;
+#endif
     }
 }

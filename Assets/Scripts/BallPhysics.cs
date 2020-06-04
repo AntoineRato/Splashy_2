@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BallPhysics : MonoBehaviour
 {
-    private int bounceStrenght = 200;
+    private int bounceStrenght = 400;
 
     // Start is called before the first frame update
     void Start()

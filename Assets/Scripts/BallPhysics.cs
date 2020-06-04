@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BallPhysics : MonoBehaviour
 {
-    private int bounceStrenght = 400;
+    private int bounceStrenght = 200;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +26,8 @@ public class BallPhysics : MonoBehaviour
             this.gameObject.GetComponent<Rigidbody>().AddForce(transform.up * bounceStrenght);
             StartCoroutine(fallPlatform(collision));
         }
+        else if (collision.gameObject.CompareTag("LastPlatform"))
+            Time.timeScale = 0;
     }
 
     private IEnumerator fallPlatform(Collision collision)

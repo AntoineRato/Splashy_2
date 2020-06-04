@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 283615753593751832}
   - component: {fileID: 2909000698205389582}
   - component: {fileID: 1775650646832375173}
+  - component: {fileID: 5335048083637652535}
   m_Layer: 0
   m_Name: Platform
-  m_TagString: Untagged
+  m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -66,8 +67,20 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 108
+  m_Constraints: 114
   m_CollisionDetection: 0
+--- !u!114 &5335048083637652535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2119270855353608947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57e502abee7c051469d44cadc1fae903, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6405195112748610324
 GameObject:
   m_ObjectHideFlags: 0
@@ -79,7 +92,6 @@ GameObject:
   - component: {fileID: 6405195112748610320}
   - component: {fileID: 6405195112748610323}
   - component: {fileID: 6405195112748610322}
-  - component: {fileID: 6405195112748610325}
   m_Layer: 0
   m_Name: pillar
   m_TagString: Untagged
@@ -148,20 +160,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!136 &6405195112748610325
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6405195112748610324}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!1 &6405195112764483351
 GameObject:
   m_ObjectHideFlags: 0

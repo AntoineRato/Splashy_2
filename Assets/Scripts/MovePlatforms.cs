@@ -4,30 +4,24 @@ using UnityEngine;
 
 public class MovePlatforms : MonoBehaviour
 {
-    public float Timescale = 15;
-
+#if UNITY_EDITOR
+    public float Timescale = 1.5f;
+#endif
     private float moveSpeed = 1.6464f;
-    private float x_travelledCounter = 10;
-    private float destroyValueBegin = -10f;
-    private float destroyDistance = 1.35f;
 
     // Start is called before the first frame update
     void Start()
     {
-        Time.timeScale = 15;
+        Time.timeScale = 1.5f;
     }
 
     // Update is called once per frame
     void Update()
     {
         this.transform.position -= new Vector3(moveSpeed * Time.deltaTime, 0, 0);
-        
-        if(this.transform.position.x < destroyValueBegin && (this.transform.position.x + x_travelledCounter) < destroyDistance && this.transform.childCount > 0)
-        {
-            Destroy(this.transform.GetChild(0).gameObject);
-            x_travelledCounter += destroyDistance;
-        }
 
+#if UNITY_EDITOR
         Time.timeScale = Timescale;
+#endif
     }
 }

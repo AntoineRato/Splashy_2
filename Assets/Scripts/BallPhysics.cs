@@ -20,7 +20,18 @@ public class BallPhysics : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        this.gameObject.GetComponent<Animation>().Play();
-        this.gameObject.GetComponent<Rigidbody>().AddForce(transform.up * bounceStrenght);;
+        if (collision.gameObject.CompareTag("Platform"))
+        {
+            this.gameObject.GetComponent<Animation>().Play();
+            this.gameObject.GetComponent<Rigidbody>().AddForce(transform.up * bounceStrenght);
+            StartCoroutine(fallPlatform(collision));
+        }
+    }
+
+    private IEnumerator fallPlatform(Collision collision)
+    {
+        yield return new WaitForSeconds(0.1f);
+        collision.gameObject.GetComponent<Rigidbody>().useGravity = true;
+        collision.gameObject.GetComponent<Rigidbody>().isKinematic = false;
     }
 }

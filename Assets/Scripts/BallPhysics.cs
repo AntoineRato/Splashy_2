@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BallPhysics : MonoBehaviour
 {
@@ -20,14 +21,16 @@ public class BallPhysics : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Platform"))
+        if (collision.gameObject.CompareTag("Platform") && DrawLevel.gameIsRunning)
         {
             this.gameObject.GetComponent<Animation>().Play();
             this.gameObject.GetComponent<Rigidbody>().AddForce(transform.up * bounceStrenght);
             StartCoroutine(fallPlatform(collision));
         }
         else if (collision.gameObject.CompareTag("LastPlatform"))
-            Time.timeScale = 0;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        else if (collision.gameObject.CompareTag("Ground"))
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     private IEnumerator fallPlatform(Collision collision)

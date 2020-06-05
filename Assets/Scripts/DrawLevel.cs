@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class DrawLevel : MonoBehaviour
 {
+    public static bool gameIsRunning;
+
     public GameObject platformPrefab;
     public GameObject lastPlatformPrefab;
 
@@ -17,6 +19,7 @@ public class DrawLevel : MonoBehaviour
 
     private void Awake()
     {
+        gameIsRunning = false;
         Application.targetFrameRate = 300;
         Time.timeScale = 1.5f;
     }
@@ -27,18 +30,18 @@ public class DrawLevel : MonoBehaviour
         float x_spawnValue = 1.35f;
         float z_spawnValue = -0.538f;
 
-        for (int i = 0; i < 50; i++)
+        for (int i = 0; i < 15; i++)
         {
-            /*z_spawnValue += Random.Range(-spacingPlatformValue, spacingPlatformValue);
-            z_spawnValue = Mathf.Min(z_maxGameArea, Mathf.Max(z_spawnValue, z_minGameArea));*/
+            z_spawnValue += Random.Range(-spacingPlatformValue, spacingPlatformValue);
+            z_spawnValue = Mathf.Min(z_maxGameArea, Mathf.Max(z_spawnValue, z_minGameArea));
 
             Instantiate(platformPrefab, new Vector3(x_spawnValue, 0, z_spawnValue), Quaternion.identity);
 
             x_spawnValue += spacingPlatformValue;
         }
 
-        /*z_spawnValue += Random.Range(-spacingPlatformValue, spacingPlatformValue);
-        z_spawnValue = Mathf.Min(z_maxGameArea, Mathf.Max(z_spawnValue, z_minGameArea));*/
+        z_spawnValue += Random.Range(-spacingPlatformValue, spacingPlatformValue);
+        z_spawnValue = Mathf.Min(z_maxGameArea, Mathf.Max(z_spawnValue, z_minGameArea));
 
         Instantiate(lastPlatformPrefab, new Vector3(x_spawnValue, 0, z_spawnValue), Quaternion.identity);
     }

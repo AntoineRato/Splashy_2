@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Platform
   - LastPlatform
+  - Ground
   layers:
   - Default
   - TransparentFX

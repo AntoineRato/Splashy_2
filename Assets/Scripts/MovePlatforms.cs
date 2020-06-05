@@ -15,7 +15,8 @@ public class MovePlatforms : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        this.transform.position -= new Vector3(moveSpeed * Time.deltaTime, 0, 0);
+        if(DrawLevel.gameIsRunning)
+            this.transform.position -= new Vector3(moveSpeed * Time.deltaTime, 0, 0);
 
         if (transform.position.y < -10f || transform.position.x < -10f)
             Destroy(this.gameObject);

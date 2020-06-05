@@ -6,13 +6,25 @@ using UnityEngine.SceneManagement;
 public class BallPhysics : MonoBehaviour
 {
     private int bounceStrenght = 200;
+    private Rigidbody ballRigidbody;
+    private Animation ballAnimation;
+    private int platformHitCount = 0;
+
+    private void Start()
+    {
+        ballRigidbody = this.gameObject.GetComponent<Rigidbody>();
+        ballAnimation = this.gameObject.GetComponent<Animation>();
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Platform") && DrawLevel.gameIsRunning)
         {
-            this.gameObject.GetComponent<Animation>().Play();
-            this.gameObject.GetComponent<Rigidbody>().AddForce(transform.up * bounceStrenght);
+            ballAnimation.Play();
+            ballRigidbody.AddForce(transform.up * bounceStrenght);
+            platformHitCount++;
+            if (platformHitCount % 10 == 0)
+                Time.timeScale += 0.1f;
             StartCoroutine(fallPlatform(collision));
         }
         else if (collision.gameObject.CompareTag("LastPlatform"))
@@ -24,7 +36,9 @@ public class BallPhysics : MonoBehaviour
     private IEnumerator fallPlatform(Collision collision)
     {
         yield return new WaitForSeconds(0.1f);
-        collision.gameObject.GetComponent<Rigidbody>().useGravity = true;
-        collision.gameObject.GetComponent<Rigidbody>().isKinematic = false;
+        Rigidbody collisionRigidbody = collision.gameObject.GetComponent<Rigidbody>();
+        collisionRigidbody.useGravity = true;
+        collisionRigidbody.isKinematic = false;
+        collision.gameObject.GetComponentInChildren<ParticleSystem>().Play();
     }
 }

@@ -16,7 +16,7 @@ public class BallMovements : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.touchCount > 0 && !DrawLevel.gameIsRunning)
+        if (Input.touchCount > 0 && DrawLevel.gameIsRunning)
         {
             touch = Input.GetTouch(0);
 

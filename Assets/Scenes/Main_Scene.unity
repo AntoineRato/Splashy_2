@@ -11025,6 +11025,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   platformPrefab: {fileID: 2119270855353608947, guid: 60ea53e0554a0564ba17d4fd07ef6dc6,
     type: 3}
+  platformBumpPrefab: {fileID: 5379700727844460761, guid: a25b6d8e06a9508408b97190e426adf2,
+    type: 3}
   lastPlatformPrefab: {fileID: 1410471194265671533, guid: ec5dc546f14b5da4fb3782f26786e38d,
     type: 3}
   Timescale: 1.5
@@ -12147,7 +12149,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 6.7e-44, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: -1, y: 1, z: 2, w: -2}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -12178,7 +12180,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 177638, guid: 0abab5bb77339e4428787a870eb31bd3, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22323726, guid: 0abab5bb77339e4428787a870eb31bd3, type: 3}
       propertyPath: m_AdditionalShaderChannelsFlag

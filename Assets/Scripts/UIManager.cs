@@ -15,7 +15,9 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         VS = false;
+#if UNITY_EDITOR
         StartCoroutine(test());
+#endif
     }
 
     // Update is called once per frame
@@ -43,11 +45,13 @@ public class UIManager : MonoBehaviour
         RedGloveController.SetBool("VS", VS);
     }
 
+#if UNITY_EDITOR
     private IEnumerator test()
     {
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(2f);
         DrawLevel.gameIsRunning = true;
         BallRigidbody.isKinematic = false;
         PanelButtons.SetActive(false);
     }
+#endif
 }

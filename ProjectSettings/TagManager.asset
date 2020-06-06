@@ -8,6 +8,7 @@ TagManager:
   - LastPlatform
   - Ground
   - PlatformBump
+  - PlatformBonus
   layers:
   - Default
   - TransparentFX

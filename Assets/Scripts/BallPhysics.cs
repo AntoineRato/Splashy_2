@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.UI;
 using UnityEngine.SceneManagement;
 
 public class BallPhysics : MonoBehaviour
@@ -18,7 +19,7 @@ public class BallPhysics : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(DrawLevel.gameIsRunning && collision.gameObject.CompareTag("Platform") || collision.gameObject.CompareTag("PlatformBump"))
+        if(DrawLevel.gameIsRunning && collision.gameObject.CompareTag("Platform") || collision.gameObject.CompareTag("PlatformBump") || collision.gameObject.CompareTag("PlatformBonus"))
         {
             ballAnimation.Play();
             platformHitCount++;
@@ -35,6 +36,12 @@ public class BallPhysics : MonoBehaviour
                 ballRigidbody.AddForce(transform.up * bounceStrenght * 3);
                 collision.gameObject.GetComponent<PlatformBump>().Bump();
             }
+            else if (collision.gameObject.CompareTag("PlatformBonus"))
+            {
+                ballRigidbody.AddForce(transform.up * bounceStrenght * 10);
+                //collision.gameObject.GetComponent<PlatformBump>().Bump();
+                StartCoroutine(ApplyBonus(1));
+            }
 
             //Replace the ball at the center x of platform to avoid the desyncronisation of the rhythm
             Transform floorPlatformTransform = collision.transform.GetChild(0).transform;
@@ -47,6 +54,27 @@ public class BallPhysics : MonoBehaviour
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         else if (collision.gameObject.CompareTag("Ground"))
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    private IEnumerator ApplyBonus(int step)
+    {
+        if(step == 1)
+        {
+            yield return new WaitForSeconds(0f);
+            Time.timeScale = 4;
+            StartCoroutine(ApplyBonus(2));
+        }
+        else if(step == 2)
+        {
+            yield return new WaitForSeconds(7.7f);
+            Time.timeScale = 0.2f;
+            StartCoroutine(ApplyBonus(3));
+        }
+        else if(step == 3)
+        {
+            yield return new WaitForSeconds(0.8f);
+            Time.timeScale = 1.5f;
+        }
     }
 
     private IEnumerator fallPlatform(Collision collision)

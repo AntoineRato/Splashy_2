@@ -86,7 +86,7 @@ public class DrawLevel : MonoBehaviour
     void Update()
     {
 #if UNITY_EDITOR
-        Time.timeScale = Timescale;
+        //Time.timeScale = Timescale;
 #endif
     }
 }

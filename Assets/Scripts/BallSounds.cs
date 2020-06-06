@@ -23,7 +23,7 @@ public class BallSounds : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Platform") || collision.gameObject.CompareTag("PlatformBump") && DrawLevel.gameIsRunning)
+        if (collision.gameObject.CompareTag("Platform") || collision.gameObject.CompareTag("PlatformBump") || collision.gameObject.CompareTag("PlatformBonus") && DrawLevel.gameIsRunning)
         {
             if ((nextNote + (1 * noteInverter)) >= 47)
                 noteInverter = -1;

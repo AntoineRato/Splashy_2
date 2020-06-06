@@ -11025,7 +11025,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   platformPrefab: {fileID: 2119270855353608947, guid: 60ea53e0554a0564ba17d4fd07ef6dc6,
     type: 3}
-  platformBumpPrefab: {fileID: 5379700727844460761, guid: a25b6d8e06a9508408b97190e426adf2,
+  platformBumpPrefab: {fileID: 5379700727844460761, guid: 489886b8e090def4193532b3de8ffcf9,
     type: 3}
   lastPlatformPrefab: {fileID: 1410471194265671533, guid: ec5dc546f14b5da4fb3782f26786e38d,
     type: 3}

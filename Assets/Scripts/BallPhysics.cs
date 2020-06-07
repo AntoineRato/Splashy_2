@@ -38,7 +38,7 @@ public class BallPhysics : MonoBehaviour
             }
             else if (collision.gameObject.CompareTag("PlatformBonus"))
             {
-                ballRigidbody.AddForce(transform.up * bounceStrenght * 10);
+                ballRigidbody.AddForce(transform.up * bounceStrenght * 6);
                 //collision.gameObject.GetComponent<PlatformBump>().Bump();
                 StartCoroutine(ApplyBonus(1));
             }
@@ -58,23 +58,86 @@ public class BallPhysics : MonoBehaviour
 
     private IEnumerator ApplyBonus(int step)
     {
-        if(step == 1)
+        if (step == 1)
         {
-            yield return new WaitForSeconds(0f);
+            yield return new WaitForSeconds(0.2f);
             Time.timeScale = 4;
             StartCoroutine(ApplyBonus(2));
         }
-        else if(step == 2)
+        else if (step == 2)
         {
-            yield return new WaitForSeconds(7.7f);
-            Time.timeScale = 0.2f;
+            yield return new WaitForSeconds(4.4f);
+            Debug.Log("0.1");
+            Time.timeScale = 0.1f;
             StartCoroutine(ApplyBonus(3));
         }
-        else if(step == 3)
+        else if (step == 3)
         {
-            yield return new WaitForSeconds(0.8f);
-            Time.timeScale = 1.5f;
+            yield return new WaitForSeconds(0.05f);
+            Debug.Log("2");
+            Time.timeScale = 2f;
         }
+        /*if(step == 1)
+         {
+             yield return new WaitForSeconds(0.2f);
+             Time.timeScale = 4;
+             StartCoroutine(ApplyBonus(2));
+         }
+         else if(step == 2)
+         {
+             yield return new WaitForSeconds(4.3f);
+             Debug.Log("3");
+             Time.timeScale = 3f;
+             StartCoroutine(ApplyBonus(3));
+         }
+         else if (step == 3)
+         {
+             yield return new WaitForSeconds(0.03f);
+             Debug.Log("2");
+             Time.timeScale = 2f;
+             StartCoroutine(ApplyBonus(4));
+         }
+         else if (step == 4)
+         {
+             yield return new WaitForSeconds(0.03f);
+             Debug.Log("1");
+             Time.timeScale = 1f;
+             StartCoroutine(ApplyBonus(5));
+         }
+         else if (step == 5)
+         {
+             yield return new WaitForSeconds(0.02f);
+             Debug.Log("0.5");
+             Time.timeScale = 0.5f;
+             StartCoroutine(ApplyBonus(6));
+         }
+         else if (step == 6)
+         {
+             yield return new WaitForSeconds(0.03f);
+             Debug.Log("0.1");
+             Time.timeScale = 0.1f;
+             StartCoroutine(ApplyBonus(7));
+         }
+         else if (step == 7)
+         {
+             yield return new WaitForSeconds(0.03f);
+             Debug.Log("0.5");
+             Time.timeScale = 0.5f;
+             StartCoroutine(ApplyBonus(8));
+         }
+         else if (step == 8)
+         {
+             yield return new WaitForSeconds(0.02f);
+             Debug.Log("1.2");
+             Time.timeScale = 1.2f;
+             StartCoroutine(ApplyBonus(9));
+         }
+         else if (step == 9)
+         {
+             yield return new WaitForSeconds(0.02f);
+             Debug.Log("Finish(2)");
+             Time.timeScale = 2f;
+         }*/
     }
 
     private IEnumerator fallPlatform(Collision collision)

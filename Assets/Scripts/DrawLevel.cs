@@ -23,7 +23,7 @@ public class DrawLevel : MonoBehaviour
     {
         gameIsRunning = false;
         Application.targetFrameRate = 60;
-        Time.timeScale = 1.5f;
+        Time.timeScale = 2f;
     }
 
     // Start is called before the first frame update

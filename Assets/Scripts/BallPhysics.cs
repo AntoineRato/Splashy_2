@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class BallPhysics : MonoBehaviour
 {
+    public ParticleSystem speedLinesEffect;
+
     private readonly int bounceStrenght = 200;
     private Rigidbody ballRigidbody;
     private Animation ballAnimation;
@@ -39,7 +41,8 @@ public class BallPhysics : MonoBehaviour
             else if (collision.gameObject.CompareTag("PlatformBonus"))
             {
                 ballRigidbody.AddForce(transform.up * bounceStrenght * 6);
-                //collision.gameObject.GetComponent<PlatformBump>().Bump();
+                StopAllCoroutines();
+                collision.gameObject.GetComponent<PlatformBump>().Bump();
                 StartCoroutine(ApplyBonus(1));
             }
 
@@ -52,8 +55,18 @@ public class BallPhysics : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("LastPlatform"))
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        else if (collision.gameObject.CompareTag("Ground"))
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Ground"))
+            StartCoroutine(ReloadGame());
+    }
+
+    private IEnumerator ReloadGame()
+    {
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     private IEnumerator ApplyBonus(int step)
@@ -61,83 +74,22 @@ public class BallPhysics : MonoBehaviour
         if (step == 1)
         {
             yield return new WaitForSeconds(0.2f);
+            speedLinesEffect.Play();
             Time.timeScale = 4;
             StartCoroutine(ApplyBonus(2));
         }
         else if (step == 2)
         {
             yield return new WaitForSeconds(4.4f);
-            Debug.Log("0.1");
+            speedLinesEffect.Stop();
             Time.timeScale = 0.1f;
             StartCoroutine(ApplyBonus(3));
         }
         else if (step == 3)
         {
             yield return new WaitForSeconds(0.05f);
-            Debug.Log("2");
             Time.timeScale = 2f;
         }
-        /*if(step == 1)
-         {
-             yield return new WaitForSeconds(0.2f);
-             Time.timeScale = 4;
-             StartCoroutine(ApplyBonus(2));
-         }
-         else if(step == 2)
-         {
-             yield return new WaitForSeconds(4.3f);
-             Debug.Log("3");
-             Time.timeScale = 3f;
-             StartCoroutine(ApplyBonus(3));
-         }
-         else if (step == 3)
-         {
-             yield return new WaitForSeconds(0.03f);
-             Debug.Log("2");
-             Time.timeScale = 2f;
-             StartCoroutine(ApplyBonus(4));
-         }
-         else if (step == 4)
-         {
-             yield return new WaitForSeconds(0.03f);
-             Debug.Log("1");
-             Time.timeScale = 1f;
-             StartCoroutine(ApplyBonus(5));
-         }
-         else if (step == 5)
-         {
-             yield return new WaitForSeconds(0.02f);
-             Debug.Log("0.5");
-             Time.timeScale = 0.5f;
-             StartCoroutine(ApplyBonus(6));
-         }
-         else if (step == 6)
-         {
-             yield return new WaitForSeconds(0.03f);
-             Debug.Log("0.1");
-             Time.timeScale = 0.1f;
-             StartCoroutine(ApplyBonus(7));
-         }
-         else if (step == 7)
-         {
-             yield return new WaitForSeconds(0.03f);
-             Debug.Log("0.5");
-             Time.timeScale = 0.5f;
-             StartCoroutine(ApplyBonus(8));
-         }
-         else if (step == 8)
-         {
-             yield return new WaitForSeconds(0.02f);
-             Debug.Log("1.2");
-             Time.timeScale = 1.2f;
-             StartCoroutine(ApplyBonus(9));
-         }
-         else if (step == 9)
-         {
-             yield return new WaitForSeconds(0.02f);
-             Debug.Log("Finish(2)");
-             Time.timeScale = 2f;
-         }*/
     }
 
     private IEnumerator fallPlatform(Collision collision)

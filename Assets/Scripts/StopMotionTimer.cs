@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SlowMotionTimer : MonoBehaviour
+public class StopMotionTimer : MonoBehaviour
 {
     private Text textTimer;
 

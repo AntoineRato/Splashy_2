@@ -10,6 +10,7 @@ TagManager:
   - PlatformBump
   - PlatformBonus
   - SlowMotionDetection
+  - Hourglass
   layers:
   - Default
   - TransparentFX

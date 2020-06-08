@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.UI;
@@ -8,27 +8,43 @@ using UnityEngine.UI;
 public class BallPhysics : MonoBehaviour
 {
     public ParticleSystem speedLinesEffect;
-    public GameObject slowMotionTimer;
+    public GameObject stopMotionTimer;
 
     private readonly int bounceStrenght = 200;
     private Rigidbody ballRigidbody;
     private Animation ballAnimation;
-    private bool bonusRunning = false;
+    private bool stopMotionIsRunning = false;
+    private bool slowMotionIsRunning = false;
+    private BallSounds ballSoundsScript;
 
     private void Start()
     {
         ballRigidbody = this.gameObject.GetComponent<Rigidbody>();
         ballAnimation = this.gameObject.GetComponent<Animation>();
+        ballSoundsScript = this.gameObject.GetComponent<BallSounds>();
     }
 
     private void Update()
     {
-        if(bonusRunning && this.transform.position.y <= 10f)
+        if(stopMotionIsRunning && this.transform.position.y <= 10f)
         {
             speedLinesEffect.Stop();
+            Time.timeScale = 1f;
+            ballSoundsScript.Play_TimerSound();
             Time.timeScale = 0.001f;
             Time.fixedDeltaTime = Time.timeScale * 0.02f;
+            stopMotionTimer.SetActive(true);
+            stopMotionIsRunning = false;
             StartCoroutine(ApplyBonus(3));
+        }
+        
+        if(slowMotionIsRunning)
+        {
+            Time.timeScale = Mathf.Clamp((Time.timeScale + 1f * Time.unscaledDeltaTime), 0f, 2f);
+            if (Time.timeScale >= 2f)
+            {
+                slowMotionIsRunning = false;
+            }
         }
     }
 
@@ -70,6 +86,14 @@ public class BallPhysics : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Ground"))
             StartCoroutine(ReloadGame());
+        else if(other.gameObject.CompareTag("Hourglass"))
+        {
+            StopAllCoroutines();
+            Destroy(other.gameObject);
+            ballSoundsScript.Play_SlowMotionSound(1);
+            Time.timeScale = 1f;
+            StartCoroutine(ApplyBonus(4));
+        }
     }
 
     private IEnumerator ReloadGame()

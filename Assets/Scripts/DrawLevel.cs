@@ -11,7 +11,7 @@ public class DrawLevel : MonoBehaviour
     public GameObject platformBumpPrefab;
     public GameObject lastPlatformPrefab;
 
-    private float maxSpacingPlatformValue = 1.70f;
+    private float maxSpacingPlatformValue = 1.50f;
     private float spacingPlatformValue = 1.35f;
     private float z_minGameArea = -5;
     private float z_maxGameArea = 5;
@@ -32,22 +32,24 @@ public class DrawLevel : MonoBehaviour
     {
         float x_spawnValue = spacingPlatformValue;
         float z_spawnValue = -0.538f;
+        float randomValue = 0;
 
         for (int i = 0; i < 1000; i++)
         {
-            z_spawnValue += Random.Range(-maxSpacingPlatformValue, maxSpacingPlatformValue);
-            z_spawnValue = Mathf.Min(z_maxGameArea, Mathf.Max(z_spawnValue, z_minGameArea));
+            /*z_spawnValue += Random.Range(-maxSpacingPlatformValue, maxSpacingPlatformValue);
+            z_spawnValue = Mathf.Min(z_maxGameArea, Mathf.Max(z_spawnValue, z_minGameArea));*/
 
-            //80% chance to have a normal platform | 20% chance to have a bump platform
-            if (Random.value <= 0.80f)
+            //80% chance to have a normal platform | 10% chance to have a bump platform | 10% chance to have a bonus platform
+            randomValue = Random.value;
+            if (randomValue <= 0.80f)
                 Instantiate(platformPrefab, new Vector3(x_spawnValue, 0, z_spawnValue), Quaternion.identity);
-            else if (Random.value <= 0.1f)
+            else if (randomValue <= 0.90f)
                 Instantiate(platformBumpPrefab, new Vector3(x_spawnValue, 0, z_spawnValue), Quaternion.identity);
             else
                 Instantiate(platformBonusPrefab, new Vector3(x_spawnValue, 0, z_spawnValue), Quaternion.identity);
 
-            // 25% chance to have a second platform spawn
-            if (Random.value <= 1f)
+            // 40% chance to have a second platform spawn
+            if (Random.value <= 0.40f)
             {
                 //float z_bonusSpawn = z_spawnValue;
                 float z_bonusSpawn = 0;
@@ -69,10 +71,11 @@ public class DrawLevel : MonoBehaviour
                     z_bonusSpawn = Mathf.Min(z_maxGameArea, Mathf.Max(z_bonusSpawn, z_minGameArea));
                 }
 
-                //80% chance to have a normal platform | 20% chance to have a bump platform
-                if (Random.value <= 0.80f)
+                //80% chance to have a normal platform | 10% chance to have a bump platform | 10% chance to have a bonus platform
+                randomValue = Random.value;
+                if (randomValue <= 0.80f)
                     Instantiate(platformPrefab, new Vector3(x_spawnValue, 0, (z_spawnValue + z_bonusSpawn)), Quaternion.identity);
-                else if(Random.value <= 0.1f)
+                else if(randomValue <= 0.90f)
                     Instantiate(platformBumpPrefab, new Vector3(x_spawnValue, 0, (z_spawnValue + z_bonusSpawn)), Quaternion.identity);
                 else
                     Instantiate(platformBonusPrefab, new Vector3(x_spawnValue, 0, (z_spawnValue + z_bonusSpawn)), Quaternion.identity);

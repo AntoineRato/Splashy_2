@@ -9,6 +9,7 @@ TagManager:
   - Ground
   - PlatformBump
   - PlatformBonus
+  - SlowMotionDetection
   layers:
   - Default
   - TransparentFX

@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class BallPhysics : MonoBehaviour
 {
     public ParticleSystem speedLinesEffect;
+    public GameObject slowMotionTimer;
 
     private readonly int bounceStrenght = 200;
     private Rigidbody ballRigidbody;
     private Animation ballAnimation;
-    private int platformHitCount = 0;
+    private bool bonusRunning = false;
 
     private void Start()
     {
@@ -19,14 +21,22 @@ public class BallPhysics : MonoBehaviour
         ballAnimation = this.gameObject.GetComponent<Animation>();
     }
 
+    private void Update()
+    {
+        if(bonusRunning && this.transform.position.y <= 10f)
+        {
+            speedLinesEffect.Stop();
+            Time.timeScale = 0.001f;
+            Time.fixedDeltaTime = Time.timeScale * 0.02f;
+            StartCoroutine(ApplyBonus(3));
+        }
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if(DrawLevel.gameIsRunning && collision.gameObject.CompareTag("Platform") || collision.gameObject.CompareTag("PlatformBump") || collision.gameObject.CompareTag("PlatformBonus"))
         {
             ballAnimation.Play();
-            platformHitCount++;
-            if (platformHitCount % 10 == 0)
-                Time.timeScale += 0.1f;
 
             if (collision.gameObject.CompareTag("Platform"))
             {
@@ -41,7 +51,6 @@ public class BallPhysics : MonoBehaviour
             else if (collision.gameObject.CompareTag("PlatformBonus"))
             {
                 ballRigidbody.AddForce(transform.up * bounceStrenght * 6);
-                StopAllCoroutines();
                 collision.gameObject.GetComponent<PlatformBump>().Bump();
                 StartCoroutine(ApplyBonus(1));
             }
@@ -75,20 +84,21 @@ public class BallPhysics : MonoBehaviour
         {
             yield return new WaitForSeconds(0.2f);
             speedLinesEffect.Play();
-            Time.timeScale = 4;
+            Time.timeScale = 6f;
             StartCoroutine(ApplyBonus(2));
         }
-        else if (step == 2)
+        else if(step == 2)
         {
-            yield return new WaitForSeconds(4.4f);
-            speedLinesEffect.Stop();
-            Time.timeScale = 0.1f;
-            StartCoroutine(ApplyBonus(3));
+            yield return new WaitForSeconds(0.8f);
+            bonusRunning = true;
         }
-        else if (step == 3)
+        else if(step == 3)
         {
-            yield return new WaitForSeconds(0.05f);
-            Time.timeScale = 2f;
+            slowMotionTimer.SetActive(true);
+            yield return new WaitForSeconds(0.001f);
+            Time.timeScale = 2;
+            Time.fixedDeltaTime = 0.02f;
+            bonusRunning = false;
         }
     }
 

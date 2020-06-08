@@ -12,12 +12,6 @@ public class PlatformBump : MonoBehaviour
         platformBumpRigidbody = this.GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void Bump()
     {
         StartCoroutine(BumpDelay());

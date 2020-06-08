@@ -83,6 +83,11 @@ public class GameSounds : MonoBehaviour
         ballAudioSource.PlayOneShot(bumpPlatformSound);
     }
 
+    public void SetPitch(float _pitch)
+    {
+        ballAudioSource.pitch = _pitch;
+    }
+
     public void StopCurrentSound()
     {
         ballAudioSource.Stop();

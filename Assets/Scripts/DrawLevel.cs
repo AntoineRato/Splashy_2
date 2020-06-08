@@ -12,7 +12,7 @@ public class DrawLevel : MonoBehaviour
     public GameObject lastPlatformPrefab;
     public GameObject hourglassPrefab;
 
-    private float maxSpacingPlatformValue = 1.50f;
+    private float maxSpacingPlatformValue = 1.38f;
     private float spacingPlatformValue = 1.35f;
     private float z_minGameArea = -5;
     private float z_maxGameArea = 5;
@@ -41,13 +41,14 @@ public class DrawLevel : MonoBehaviour
             z_spawnValue += Random.Range(-maxSpacingPlatformValue, maxSpacingPlatformValue);
             z_spawnValue = Mathf.Min(z_maxGameArea, Mathf.Max(z_spawnValue, z_minGameArea));
 
-            //80% chance to have a normal platform | 10% chance to have a bump platform | 10% chance to have a bonus platform
+            //88% chance to have a normal platform | 6% chance to have a bump platform | 6% chance to have a bonus platform
             if ((platformNumber - i) > 5)
             {
                 randomValue = Random.value;
-                if (randomValue <= 0.80f)
+                if (randomValue <= 0.88f)
                 {
-                    if (Random.value <= 0.10f)
+                    //7% chance to have a SlowBonus
+                    if (Random.value <= 0.07f)
                     {
                         GameObject instantiatePlatform = Instantiate(platformPrefab, new Vector3(x_spawnValue, 0, z_spawnValue), Quaternion.identity);
                         Transform floorInstantiatePlatform = instantiatePlatform.transform.GetChild(0).transform;
@@ -56,12 +57,13 @@ public class DrawLevel : MonoBehaviour
                     else
                         Instantiate(platformPrefab, new Vector3(x_spawnValue, 0, z_spawnValue), Quaternion.identity);
                 }
-                else if (randomValue <= 0.90f)
+                else if (randomValue <= 0.94f)
                     Instantiate(platformBumpPrefab, new Vector3(x_spawnValue, 0, z_spawnValue), Quaternion.identity);
                 else
                     Instantiate(platformBonusPrefab, new Vector3(x_spawnValue, 0, z_spawnValue), Quaternion.identity);
             }
-            else if (Random.value <= 0.10f)
+            //7% chance to have a SlowBonus
+            else if (Random.value <= 0.07f)
             {
                 GameObject instantiatePlatform = Instantiate(platformPrefab, new Vector3(x_spawnValue, 0, z_spawnValue), Quaternion.identity);
                 Transform floorInstantiatePlatform = instantiatePlatform.transform.GetChild(0).transform;
@@ -73,7 +75,6 @@ public class DrawLevel : MonoBehaviour
             // 40% chance to have a second platform spawn
             if (Random.value <= 0.40f)
             {
-                //float z_bonusSpawn = z_spawnValue;
                 float z_bonusSpawn = 0;
                 if ((z_bonusSpawn + 1.35f) > z_maxGameArea)
                 {
@@ -93,13 +94,14 @@ public class DrawLevel : MonoBehaviour
                     z_bonusSpawn = Mathf.Min(z_maxGameArea, Mathf.Max(z_bonusSpawn, z_minGameArea));
                 }
 
-                //80% chance to have a normal platform | 10% chance to have a bump platform | 10% chance to have a bonus platform
+                //88% chance to have a normal platform | 6% chance to have a bump platform | 6% chance to have a bonus platform
                 if ((platformNumber - i) > 5)
                 {
                     randomValue = Random.value;
-                    if (randomValue <= 0.80f)
+                    if (randomValue <= 0.88f)
                     {
-                        if (Random.value <= 0.10f)
+                        //7% chance to have a SlowBonus
+                        if (Random.value <= 0.07f)
                         {
                             GameObject instantiatePlatform = Instantiate(platformPrefab, new Vector3(x_spawnValue, 0, (z_spawnValue + z_bonusSpawn)), Quaternion.identity);
                             Transform floorInstantiatePlatform = instantiatePlatform.transform.GetChild(0).transform;
@@ -108,12 +110,13 @@ public class DrawLevel : MonoBehaviour
                         else
                             Instantiate(platformPrefab, new Vector3(x_spawnValue, 0, (z_spawnValue + z_bonusSpawn)), Quaternion.identity);
                     }
-                    else if (randomValue <= 0.90f)
+                    else if (randomValue <= 0.94f)
                         Instantiate(platformBumpPrefab, new Vector3(x_spawnValue, 0, (z_spawnValue + z_bonusSpawn)), Quaternion.identity);
                     else
                         Instantiate(platformBonusPrefab, new Vector3(x_spawnValue, 0, (z_spawnValue + z_bonusSpawn)), Quaternion.identity);
                 }
-                else if (Random.value <= 0.10f)
+                //7% chance to have a SlowBonus
+                else if (Random.value <= 0.07f)
                 {
                     GameObject instantiatePlatform = Instantiate(platformPrefab, new Vector3(x_spawnValue, 0, (z_spawnValue + z_bonusSpawn)), Quaternion.identity);
                     Transform floorInstantiatePlatform = instantiatePlatform.transform.GetChild(0).transform;

@@ -15,13 +15,13 @@ public class BallPhysics : MonoBehaviour
     private Animation ballAnimation;
     private bool stopMotionIsRunning = false;
     private bool slowMotionIsRunning = false;
-    private GameSounds ballSoundsScript;
+    private GameSounds gameSoundsScript;
 
     private void Start()
     {
         ballRigidbody = this.gameObject.GetComponent<Rigidbody>();
         ballAnimation = this.gameObject.GetComponent<Animation>();
-        ballSoundsScript = this.gameObject.GetComponent<GameSounds>();
+        gameSoundsScript = this.gameObject.GetComponent<GameSounds>();
     }
 
     private void Update()
@@ -30,7 +30,7 @@ public class BallPhysics : MonoBehaviour
         {
             speedLinesEffect.Stop();
             Time.timeScale = 1f;
-            ballSoundsScript.Play_TimerSound();
+            gameSoundsScript.Play_TimerSound();
             Time.timeScale = 0.001f;
             Time.fixedDeltaTime = Time.timeScale * 0.02f;
             stopMotionTimer.SetActive(true);
@@ -61,13 +61,13 @@ public class BallPhysics : MonoBehaviour
             }
             else if (collision.gameObject.CompareTag("PlatformBump"))
             {
-                ballSoundsScript.Play_BumpPlatformSound();
+                gameSoundsScript.Play_BumpPlatformSound();
                 ballRigidbody.AddForce(transform.up * bounceStrenght * 3);
                 collision.gameObject.GetComponent<PlatformBump>().Bump();
             }
             else if (collision.gameObject.CompareTag("PlatformBonus"))
             {
-                ballSoundsScript.Play_BumpPlatformSound();
+                gameSoundsScript.Play_BumpPlatformSound();
                 ballRigidbody.AddForce(transform.up * bounceStrenght * 6);
                 collision.gameObject.GetComponent<PlatformBump>().Bump();
                 StopAllCoroutines();
@@ -95,10 +95,12 @@ public class BallPhysics : MonoBehaviour
             StartCoroutine(ReloadGame());
         else if(other.gameObject.CompareTag("Hourglass"))
         {
+            slowMotionIsRunning = false;
             StopAllCoroutines();
             Destroy(other.gameObject);
-            ballSoundsScript.Play_SlowMotionSound(1);
+            gameSoundsScript.Play_SlowMotionSound(1);
             Time.timeScale = 1f;
+            gameSoundsScript.SetPitch(0.5f);
             StartCoroutine(ApplyBonus(4));
         }
     }
@@ -116,7 +118,7 @@ public class BallPhysics : MonoBehaviour
             slowMotionIsRunning = false;
             yield return new WaitForSeconds(0.2f);
             speedLinesEffect.Play();
-            ballSoundsScript.Play_SpeedSound();
+            gameSoundsScript.Play_SpeedSound();
             Time.timeScale = 6f;
             StartCoroutine(ApplyBonus(2));
         }
@@ -128,7 +130,7 @@ public class BallPhysics : MonoBehaviour
         else if(step == 3)
         {
             yield return new WaitForSeconds(0.001f);
-            ballSoundsScript.StopCurrentSound();
+            gameSoundsScript.StopCurrentSound();
             Time.timeScale = 2;
             Time.fixedDeltaTime = 0.02f;
             stopMotionIsRunning = false;
@@ -137,7 +139,8 @@ public class BallPhysics : MonoBehaviour
         if(step == 4)
         {
             yield return new WaitForSeconds(3f);
-            ballSoundsScript.Play_SlowMotionSound(2);
+            gameSoundsScript.Play_SlowMotionSound(2);
+            gameSoundsScript.SetPitch(1f);
             slowMotionIsRunning = true;
         }
     }

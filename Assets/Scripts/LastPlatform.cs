@@ -18,15 +18,16 @@ public class LastPlatform : MonoBehaviour
     {
         foreach(ParticleSystem confetti in confettiObjects)
         {
-            confetti.Play();
             StopAllCoroutines();
+            Time.timeScale = 2f;
+            confetti.Play();
             StartCoroutine(reloadGame());
         }
     }
 
     private IEnumerator reloadGame()
     {
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(10f);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

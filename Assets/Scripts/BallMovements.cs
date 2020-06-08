@@ -7,12 +7,6 @@ public class BallMovements : MonoBehaviour
     private Touch touch;
     private float moveSpeed = 0.006f;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {

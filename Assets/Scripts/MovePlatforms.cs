@@ -6,12 +6,6 @@ public class MovePlatforms : MonoBehaviour
 {
     private float moveSpeed = 1.6464f;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
     // Update is called once per frame
     void Update()
     {

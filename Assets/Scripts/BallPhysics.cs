@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.UI;
@@ -61,13 +61,16 @@ public class BallPhysics : MonoBehaviour
             }
             else if (collision.gameObject.CompareTag("PlatformBump"))
             {
+                ballSoundsScript.Play_BumpPlatformSound();
                 ballRigidbody.AddForce(transform.up * bounceStrenght * 3);
                 collision.gameObject.GetComponent<PlatformBump>().Bump();
             }
             else if (collision.gameObject.CompareTag("PlatformBonus"))
             {
+                ballSoundsScript.Play_BumpPlatformSound();
                 ballRigidbody.AddForce(transform.up * bounceStrenght * 6);
                 collision.gameObject.GetComponent<PlatformBump>().Bump();
+                StopAllCoroutines();
                 StartCoroutine(ApplyBonus(1));
             }
 
@@ -106,23 +109,32 @@ public class BallPhysics : MonoBehaviour
     {
         if (step == 1)
         {
+            slowMotionIsRunning = false;
             yield return new WaitForSeconds(0.2f);
             speedLinesEffect.Play();
+            ballSoundsScript.Play_SpeedSound();
             Time.timeScale = 6f;
             StartCoroutine(ApplyBonus(2));
         }
         else if(step == 2)
         {
             yield return new WaitForSeconds(0.8f);
-            bonusRunning = true;
+            stopMotionIsRunning = true;
         }
         else if(step == 3)
         {
-            slowMotionTimer.SetActive(true);
             yield return new WaitForSeconds(0.001f);
+            ballSoundsScript.StopCurrentSound();
             Time.timeScale = 2;
             Time.fixedDeltaTime = 0.02f;
-            bonusRunning = false;
+            stopMotionIsRunning = false;
+        }
+
+        if(step == 4)
+        {
+            yield return new WaitForSeconds(3f);
+            ballSoundsScript.Play_SlowMotionSound(2);
+            slowMotionIsRunning = true;
         }
     }
 

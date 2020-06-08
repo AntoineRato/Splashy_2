@@ -15,13 +15,13 @@ public class BallPhysics : MonoBehaviour
     private Animation ballAnimation;
     private bool stopMotionIsRunning = false;
     private bool slowMotionIsRunning = false;
-    private BallSounds ballSoundsScript;
+    private GameSounds ballSoundsScript;
 
     private void Start()
     {
         ballRigidbody = this.gameObject.GetComponent<Rigidbody>();
         ballAnimation = this.gameObject.GetComponent<Animation>();
-        ballSoundsScript = this.gameObject.GetComponent<BallSounds>();
+        ballSoundsScript = this.gameObject.GetComponent<GameSounds>();
     }
 
     private void Update()
@@ -50,7 +50,7 @@ public class BallPhysics : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(DrawLevel.gameIsRunning && collision.gameObject.CompareTag("Platform") || collision.gameObject.CompareTag("PlatformBump") || collision.gameObject.CompareTag("PlatformBonus"))
+        if (DrawLevel.gameIsRunning && collision.gameObject.CompareTag("Platform") || collision.gameObject.CompareTag("PlatformBump") || collision.gameObject.CompareTag("PlatformBonus"))
         {
             ballAnimation.Play();
 
@@ -82,7 +82,11 @@ public class BallPhysics : MonoBehaviour
             }
         }
         else if (collision.gameObject.CompareTag("LastPlatform"))
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        {
+            DrawLevel.gameIsRunning = false;
+            collision.gameObject.GetComponent<LastPlatform>().ConfettiThrow();
+        }
+
     }
 
     private void OnTriggerEnter(Collider other)

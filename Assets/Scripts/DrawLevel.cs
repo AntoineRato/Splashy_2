@@ -16,6 +16,7 @@ public class DrawLevel : MonoBehaviour
     private float spacingPlatformValue = 1.35f;
     private float z_minGameArea = -5;
     private float z_maxGameArea = 5;
+    private float platformNumber = 50;
 
 #if UNITY_EDITOR
     public float Timescale = 2f;
@@ -35,28 +36,39 @@ public class DrawLevel : MonoBehaviour
         float z_spawnValue = -0.538f;
         float randomValue = 0;
 
-        for (int i = 0; i < 1000; i++)
+        for (int i = 0; i < platformNumber; i++)
         {
             z_spawnValue += Random.Range(-maxSpacingPlatformValue, maxSpacingPlatformValue);
             z_spawnValue = Mathf.Min(z_maxGameArea, Mathf.Max(z_spawnValue, z_minGameArea));
 
             //80% chance to have a normal platform | 10% chance to have a bump platform | 10% chance to have a bonus platform
-            randomValue = Random.value;
-            if (randomValue <= 0.80f)
+            if ((platformNumber - i) > 5)
             {
-                if (Random.value <= 0.10f)
+                randomValue = Random.value;
+                if (randomValue <= 0.80f)
                 {
-                    GameObject instantiatePlatform = Instantiate(platformPrefab, new Vector3(x_spawnValue, 0, z_spawnValue), Quaternion.identity);
-                    Transform floorInstantiatePlatform = instantiatePlatform.transform.GetChild(0).transform;
-                    Instantiate(hourglassPrefab, new Vector3(floorInstantiatePlatform.transform.position.x, 0.140f, floorInstantiatePlatform.transform.position.z), Quaternion.identity, instantiatePlatform.transform);
+                    if (Random.value <= 0.10f)
+                    {
+                        GameObject instantiatePlatform = Instantiate(platformPrefab, new Vector3(x_spawnValue, 0, z_spawnValue), Quaternion.identity);
+                        Transform floorInstantiatePlatform = instantiatePlatform.transform.GetChild(0).transform;
+                        Instantiate(hourglassPrefab, new Vector3(floorInstantiatePlatform.transform.position.x, 0.140f, floorInstantiatePlatform.transform.position.z), Quaternion.identity, instantiatePlatform.transform);
+                    }
+                    else
+                        Instantiate(platformPrefab, new Vector3(x_spawnValue, 0, z_spawnValue), Quaternion.identity);
                 }
+                else if (randomValue <= 0.90f)
+                    Instantiate(platformBumpPrefab, new Vector3(x_spawnValue, 0, z_spawnValue), Quaternion.identity);
                 else
-                    Instantiate(platformPrefab, new Vector3(x_spawnValue, 0, z_spawnValue), Quaternion.identity);
+                    Instantiate(platformBonusPrefab, new Vector3(x_spawnValue, 0, z_spawnValue), Quaternion.identity);
             }
-            else if (randomValue <= 0.90f)
-                Instantiate(platformBumpPrefab, new Vector3(x_spawnValue, 0, z_spawnValue), Quaternion.identity);
+            else if (Random.value <= 0.10f)
+            {
+                GameObject instantiatePlatform = Instantiate(platformPrefab, new Vector3(x_spawnValue, 0, z_spawnValue), Quaternion.identity);
+                Transform floorInstantiatePlatform = instantiatePlatform.transform.GetChild(0).transform;
+                Instantiate(hourglassPrefab, new Vector3(floorInstantiatePlatform.transform.position.x, 0.140f, floorInstantiatePlatform.transform.position.z), Quaternion.identity, instantiatePlatform.transform);
+            }
             else
-                Instantiate(platformBonusPrefab, new Vector3(x_spawnValue, 0, z_spawnValue), Quaternion.identity);
+                Instantiate(platformPrefab, new Vector3(x_spawnValue, 0, z_spawnValue), Quaternion.identity);
 
             // 40% chance to have a second platform spawn
             if (Random.value <= 0.40f)
@@ -82,22 +94,33 @@ public class DrawLevel : MonoBehaviour
                 }
 
                 //80% chance to have a normal platform | 10% chance to have a bump platform | 10% chance to have a bonus platform
-                randomValue = Random.value;
-                if (randomValue <= 0.80f)
+                if ((platformNumber - i) > 5)
                 {
-                    if(Random.value <= 0.10f)
+                    randomValue = Random.value;
+                    if (randomValue <= 0.80f)
                     {
-                        GameObject instantiatePlatform = Instantiate(platformPrefab, new Vector3(x_spawnValue, 0, (z_spawnValue + z_bonusSpawn)), Quaternion.identity);
-                        Transform floorInstantiatePlatform = instantiatePlatform.transform.GetChild(0).transform;
-                        Instantiate(hourglassPrefab, new Vector3(floorInstantiatePlatform.transform.position.x, 0.140f, floorInstantiatePlatform.transform.position.z), Quaternion.identity, instantiatePlatform.transform);
+                        if (Random.value <= 0.10f)
+                        {
+                            GameObject instantiatePlatform = Instantiate(platformPrefab, new Vector3(x_spawnValue, 0, (z_spawnValue + z_bonusSpawn)), Quaternion.identity);
+                            Transform floorInstantiatePlatform = instantiatePlatform.transform.GetChild(0).transform;
+                            Instantiate(hourglassPrefab, new Vector3(floorInstantiatePlatform.transform.position.x, 0.140f, floorInstantiatePlatform.transform.position.z), Quaternion.identity, instantiatePlatform.transform);
+                        }
+                        else
+                            Instantiate(platformPrefab, new Vector3(x_spawnValue, 0, (z_spawnValue + z_bonusSpawn)), Quaternion.identity);
                     }
+                    else if (randomValue <= 0.90f)
+                        Instantiate(platformBumpPrefab, new Vector3(x_spawnValue, 0, (z_spawnValue + z_bonusSpawn)), Quaternion.identity);
                     else
-                        Instantiate(platformPrefab, new Vector3(x_spawnValue, 0, (z_spawnValue + z_bonusSpawn)), Quaternion.identity);
+                        Instantiate(platformBonusPrefab, new Vector3(x_spawnValue, 0, (z_spawnValue + z_bonusSpawn)), Quaternion.identity);
                 }
-                else if(randomValue <= 0.90f)
-                    Instantiate(platformBumpPrefab, new Vector3(x_spawnValue, 0, (z_spawnValue + z_bonusSpawn)), Quaternion.identity);
+                else if (Random.value <= 0.10f)
+                {
+                    GameObject instantiatePlatform = Instantiate(platformPrefab, new Vector3(x_spawnValue, 0, (z_spawnValue + z_bonusSpawn)), Quaternion.identity);
+                    Transform floorInstantiatePlatform = instantiatePlatform.transform.GetChild(0).transform;
+                    Instantiate(hourglassPrefab, new Vector3(floorInstantiatePlatform.transform.position.x, 0.140f, floorInstantiatePlatform.transform.position.z), Quaternion.identity, instantiatePlatform.transform);
+                }
                 else
-                    Instantiate(platformBonusPrefab, new Vector3(x_spawnValue, 0, (z_spawnValue + z_bonusSpawn)), Quaternion.identity);
+                    Instantiate(platformPrefab, new Vector3(x_spawnValue, 0, (z_spawnValue + z_bonusSpawn)), Quaternion.identity);
             }
 
             x_spawnValue += spacingPlatformValue;

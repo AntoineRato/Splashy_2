@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Security.Permissions;
 using UnityEngine;
 
-public class BallSounds : MonoBehaviour
+public class GameSounds : MonoBehaviour
 {
     private AudioSource ballAudioSource;
     private AudioClip[] pianoNote;
@@ -11,6 +11,8 @@ public class BallSounds : MonoBehaviour
     private AudioClip timerSound;
     private AudioClip speedSound;
     private AudioClip bumpPlatformSound;
+    private AudioClip allPianoNotes;
+    private AudioClip confettiSound;
     private int nextNote = 1;
     private int noteInverter = 1;
 
@@ -26,11 +28,13 @@ public class BallSounds : MonoBehaviour
             pianoNote[i] = (AudioClip)Resources.Load("Audio/Piano/note-" + (i + 1));
         }
 
+        allPianoNotes = (AudioClip)Resources.Load("Audio/Piano/allNotes");
         slowMotion[0] = (AudioClip)Resources.Load("Audio/slowMotion_in");
         slowMotion[1] = (AudioClip)Resources.Load("Audio/slowMotion_out"); ;
         timerSound = (AudioClip)Resources.Load("Audio/timerSound"); ;
         speedSound = (AudioClip)Resources.Load("Audio/speedEffect");
         bumpPlatformSound = (AudioClip)Resources.Load("Audio/bumpPlatformSound");
+        confettiSound = (AudioClip)Resources.Load("Audio/confettiSound");
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -46,9 +50,12 @@ public class BallSounds : MonoBehaviour
 
             ballAudioSource.PlayOneShot(pianoNote[nextNote]);
         }
-        /*else if (collision.gameObject.CompareTag("LastPlatform"))
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        else if (collision.gameObject.CompareTag("Ground"))
+        else if (collision.gameObject.CompareTag("LastPlatform"))
+        {
+            ballAudioSource.PlayOneShot(confettiSound, 1.7f);
+            ballAudioSource.PlayOneShot(allPianoNotes);
+        }
+        /*else if (collision.gameObject.CompareTag("Ground"))
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);*/
     }
     
@@ -58,12 +65,12 @@ public class BallSounds : MonoBehaviour
     /// <param name="step"> 1 = in / 2 = out</param>
     public void Play_SlowMotionSound(int step)
     {
-        ballAudioSource.PlayOneShot(slowMotion[step - 1]);
+        ballAudioSource.PlayOneShot(slowMotion[step - 1], 0.9f);
     }
 
     public void Play_TimerSound()
     {
-        ballAudioSource.PlayOneShot(timerSound);
+        ballAudioSource.PlayOneShot(timerSound, 1.2f);
     }
 
     public void Play_SpeedSound()
@@ -74,7 +81,7 @@ public class BallSounds : MonoBehaviour
     public void Play_BumpPlatformSound()
     {
         ballAudioSource.PlayOneShot(bumpPlatformSound);
-    }     
+    }
 
     public void StopCurrentSound()
     {

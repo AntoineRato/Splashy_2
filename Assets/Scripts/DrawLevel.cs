@@ -16,11 +16,7 @@ public class DrawLevel : MonoBehaviour
     private float spacingPlatformValue = 1.35f;
     private float z_minGameArea = -5;
     private float z_maxGameArea = 5;
-    private float platformNumber = 50;
-
-#if UNITY_EDITOR
-    public float Timescale = 2f;
-#endif
+    private float platformNumber = 100;
 
     private void Awake()
     {
@@ -38,8 +34,8 @@ public class DrawLevel : MonoBehaviour
 
         for (int i = 0; i < platformNumber; i++)
         {
-            z_spawnValue += Random.Range(-maxSpacingPlatformValue, maxSpacingPlatformValue);
-            z_spawnValue = Mathf.Min(z_maxGameArea, Mathf.Max(z_spawnValue, z_minGameArea));
+            /*z_spawnValue += Random.Range(-maxSpacingPlatformValue, maxSpacingPlatformValue);
+            z_spawnValue = Mathf.Min(z_maxGameArea, Mathf.Max(z_spawnValue, z_minGameArea));*/
 
             //88% chance to have a normal platform | 6% chance to have a bump platform | 6% chance to have a bonus platform
             if ((platformNumber - i) > 5)
@@ -129,17 +125,9 @@ public class DrawLevel : MonoBehaviour
             x_spawnValue += spacingPlatformValue;
         }
 
-        z_spawnValue += Random.Range(-maxSpacingPlatformValue, maxSpacingPlatformValue);
-        z_spawnValue = Mathf.Min(z_maxGameArea, Mathf.Max(z_spawnValue, z_minGameArea));
+        /*z_spawnValue += Random.Range(-maxSpacingPlatformValue, maxSpacingPlatformValue);
+        z_spawnValue = Mathf.Min(z_maxGameArea, Mathf.Max(z_spawnValue, z_minGameArea));*/
 
         Instantiate(lastPlatformPrefab, new Vector3(x_spawnValue, 0, z_spawnValue), Quaternion.identity);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-#if UNITY_EDITOR
-        //Time.timeScale = Timescale;
-#endif
     }
 }

@@ -27,7 +27,7 @@ public class LastPlatform : MonoBehaviour
 
     private IEnumerator reloadGame()
     {
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(14f);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

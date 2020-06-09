@@ -48,7 +48,7 @@ public class UIManager : MonoBehaviour
 #if UNITY_EDITOR
     private IEnumerator test()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(11f);
         DrawLevel.gameIsRunning = true;
         BallRigidbody.isKinematic = false;
         PanelButtons.SetActive(false);

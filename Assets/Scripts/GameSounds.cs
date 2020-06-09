@@ -27,7 +27,7 @@ public class GameSounds : MonoBehaviour
     {
         if (PlayerPrefs.HasKey("instrumentSelected"))
             instrumentSelected = PlayerPrefs.GetInt("instrumentSelected");
-        else instrumentSelected = 0;
+        else instrumentSelected = 1;
     }
 
     // Start is called before the first frame update

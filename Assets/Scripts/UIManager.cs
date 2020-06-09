@@ -6,7 +6,8 @@ using UnityEngine.EventSystems;
 public class UIManager : MonoBehaviour
 {
     public Animator ChangeModeController, GreenGloveController, RedGloveController;
-    public GameObject PanelButtons;
+    public GameObject PanelMenu;
+    public GameObject PanelSkins;
     public Rigidbody BallRigidbody;
 
     private bool VS;
@@ -31,7 +32,8 @@ public class UIManager : MonoBehaviour
             {
                 DrawLevel.gameIsRunning = true;
                 BallRigidbody.isKinematic = false;
-                PanelButtons.SetActive(false);
+                PanelMenu.SetActive(false);
+                PanelSkins.SetActive(false);
             }
         }
     }
@@ -51,7 +53,8 @@ public class UIManager : MonoBehaviour
         yield return new WaitForSeconds(11f);
         DrawLevel.gameIsRunning = true;
         BallRigidbody.isKinematic = false;
-        PanelButtons.SetActive(false);
+        PanelMenu.SetActive(false);
+        PanelSkins.SetActive(false);
     }
 #endif
 }
